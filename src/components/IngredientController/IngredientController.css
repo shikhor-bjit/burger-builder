@@ -1,0 +1,15 @@
+.IngredientController {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #dea182;
+}
+
+.IngredientController > button {
+    font: inherit;
+    padding: 5px;
+    margin: 0 5px;
+    width: 120px;
+    border: 1px solid #AA6817;
+    cursor: pointer;
+    outline: none;
+}
