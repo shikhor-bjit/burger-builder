@@ -6,18 +6,30 @@ import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
 
 class Layout extends React.Component {
     state = {
-        isSideDrawerOpen: true
+        isSideDrawerOpen: false
     }
 
     closeSideDrawer = () => {
         this.setState({isSideDrawerOpen: false});
     }
 
+    sideDrawerToggleHandler = () => {
+        this.setState(
+            (prevState) => {
+                return (
+                    {isSideDrawerOpen: !prevState.isSideDrawerOpen}
+                );
+            }
+        );
+    }
+
     render() {
         return (
             <div className="Layout">
-                <Toolbar/>
-                <SideDrawer open={this.state.isSideDrawerOpen} clicked={this.closeSideDrawer}/>
+                <Toolbar clicked={this.sideDrawerToggleHandler}/>
+                <SideDrawer
+                    open={this.state.isSideDrawerOpen}
+                    clicked={this.closeSideDrawer}/>
                 <BurgerBuilder/>
             </div>
         );
