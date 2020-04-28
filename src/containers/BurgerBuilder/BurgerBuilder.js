@@ -1,3 +1,4 @@
+import './BurgerBuilder.css';
 import React, {Component} from "react";
 import Modal from "../../components/UI/Modal/Modal";
 import Burger from "../../components/Burger/Burger";
