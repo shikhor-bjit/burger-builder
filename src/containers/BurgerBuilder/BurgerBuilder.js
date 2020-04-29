@@ -8,14 +8,14 @@ import IngredientController from "../../components/IngredientController/Ingredie
 class BurgerBuilder extends Component {
     state = {
         ingredients: {
-            bacon: 0,
             salad: 0,
+            bacon: 0,
             cheese: 0,
             meat: 0
         },
         ingredientPrices: {
-            bacon: 20,
             salad: 10,
+            bacon: 20,
             cheese: 30,
             meat: 100
         },
