@@ -4,6 +4,7 @@
 }
 
 .IngredientController > button {
+    color: white;
     font: inherit;
     padding: 15px;
     margin: 0 5px;
