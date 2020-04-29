@@ -1,15 +1,33 @@
 .IngredientController {
-    margin-bottom: 20px;
     padding: 10px;
-    background-color: #dea182;
+    background-color: #ce5901;
 }
 
 .IngredientController > button {
     font: inherit;
-    padding: 5px;
+    padding: 15px;
     margin: 0 5px;
     width: 120px;
-    border: 1px solid #AA6817;
+    border: 1px solid #aa6817;
     cursor: pointer;
     outline: none;
+    background-color: #72b323;
+}
+
+.IngredientController > button:hover {
+    color: white;
+    background-color: #85cd35;
+}
+
+.IngredientController > button:disabled {
+    background-color: #AC9980;
+    border: 1px solid #7E7365;
+    color: #ccc;
+    cursor: default;
+}
+
+.IngredientController > button:hover:disabled {
+    background-color: #AC9980;
+    color: #ccc;
+    cursor: not-allowed;
 }

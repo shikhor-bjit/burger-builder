@@ -58,6 +58,16 @@ class BurgerBuilder extends Component {
         this.setState({isPlacedOrder: false});
     }
 
+    isOrderPlaceAble = () => {
+        let isPlaceAble = true;
+        Object.keys(this.state.ingredients).forEach(
+            ingKey => {
+                if (this.state.ingredients[ingKey] > 0) isPlaceAble = false;
+            }
+        )
+        return isPlaceAble;
+    }
+
     render() {
         return (
             <div className={'BurgerBuilder'}>
@@ -69,7 +79,10 @@ class BurgerBuilder extends Component {
                                       addIngredients={this.addIngredients}
                                       removeIngredients={this.removeIngredients}
                                       totalCost={this.state.totalCost}
-                                      placeOrder={this.placeOrder}/>
+                                      placeOrder={this.placeOrder}
+                                      ingredients={this.state.ingredients}
+                                      isOrderPlaceAble={this.isOrderPlaceAble()}
+                />
             </div>
         );
     }

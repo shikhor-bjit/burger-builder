@@ -6,13 +6,15 @@ import SingleController from "./SingleController/SingleController";
 const IngredientController = props => {
     const totalCost = props.totalCost;
     const placeOrder = props.placeOrder;
+    const ingredients = props.ingredients;
     const addIngredients = props.addIngredients;
     const ingredientPrices = props.ingredientPrices;
+    const isOrderPlaceAble = props.isOrderPlaceAble;
     const removeIngredients = props.removeIngredients;
 
     return (
         <Aux>
-            <p>Total Cost: <strong>{totalCost} tk.</strong></p>
+            <p>Total Cost: <strong>{totalCost} TK.</strong></p>
             <div className={'IngredientController'}>
                 {
                     Object.keys(props.ingredientPrices)
@@ -24,12 +26,13 @@ const IngredientController = props => {
                                         name={ingKey}
                                         addIngredients={addIngredients}
                                         removeIngredients={removeIngredients}
+                                        ingredientCount={ingredients[ingKey]}
                                         price={ingredientPrices[ingKey]}/>
                                 );
                             }
                         )
                 }
-                <button onClick={placeOrder}>Place Order</button>
+                <button onClick={placeOrder} disabled={isOrderPlaceAble}>Place Order</button>
             </div>
         </Aux>
     );
