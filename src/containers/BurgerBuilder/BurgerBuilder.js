@@ -64,7 +64,7 @@ class BurgerBuilder extends Component {
 
     proceedOrder = () => {
         this.setState({loading: true});
-        axios.post('/orders.jsons', this.state.ingredients)
+        axios.post('/orders.json', this.state.ingredients)
             .then(response => {
                 this.setState({loading: false, message: 'order placed successful'});
             })
