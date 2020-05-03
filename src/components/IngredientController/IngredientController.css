@@ -12,12 +12,12 @@
     border: 1px solid #aa6817;
     cursor: pointer;
     outline: none;
-    background-color: #72b323;
+    background-color: #e1cf01;
 }
 
 .IngredientController > button:hover {
     color: white;
-    background-color: #85cd35;
+    background-color: rgba(225, 207, 1, 0.76);
 }
 
 .IngredientController > button:disabled {

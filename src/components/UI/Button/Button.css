@@ -1,0 +1,21 @@
+.Button button {
+    border: none;
+    font-weight: bold;
+    padding: 10px;
+    margin: 5px;
+    font-family: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.Default {
+    color: black;
+}
+
+.Danger {
+    color: crimson;
+}
+
+.Success {
+    color: #228c1d;
+}

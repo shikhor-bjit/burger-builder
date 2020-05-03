@@ -44,6 +44,6 @@
     .NavigationItem a.active {
         color: white;
         background-color: #b3551e;
-        border-bottom: 4px solid dodgerblue;
+        border-bottom: 4px solid #94c5f5;
     }
 }

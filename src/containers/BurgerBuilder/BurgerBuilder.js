@@ -1,7 +1,9 @@
 import './BurgerBuilder.css';
+import axios from "../../axios-order";
 import React, {Component} from "react";
 import Modal from "../../components/UI/Modal/Modal";
 import Burger from "../../components/Burger/Burger";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import IngredientController from "../../components/IngredientController/IngredientController";
 
@@ -20,7 +22,9 @@ class BurgerBuilder extends Component {
             meat: 100
         },
         totalCost: 10,
-        isPlacedOrder: false
+        isPlacedOrder: false,
+        loading: false,
+        message: null
     }
 
     addIngredients = (type) => {
@@ -55,7 +59,18 @@ class BurgerBuilder extends Component {
     }
 
     cancelOrder = () => {
-        this.setState({isPlacedOrder: false});
+        this.setState({isPlacedOrder: false, message: null});
+    }
+
+    proceedOrder = () => {
+        this.setState({loading: true});
+        axios.post('/orders.jsons', this.state.ingredients)
+            .then(response => {
+                this.setState({loading: false, message: 'order placed successful'});
+            })
+            .catch(error => {
+                this.setState({loading: false, message: error.message});
+            });
     }
 
     isOrderPlaceAble = () => {
@@ -69,11 +84,21 @@ class BurgerBuilder extends Component {
     }
 
     render() {
+        let orderSummary = (
+            <OrderSummary
+                ingredients={this.state.ingredients}
+                totalCost={this.state.totalCost}
+                clicked={this.cancelOrder}
+                proceedOrder={this.proceedOrder}/>
+        );
+        if (this.state.loading) orderSummary = <Spinner/>;
+        if (this.state.message) orderSummary = this.state.message;
+
         return (
             <div className={'BurgerBuilder'}>
                 <Burger ingredients={this.state.ingredients}/>
                 <Modal show={this.state.isPlacedOrder} clicked={this.cancelOrder}>
-                    <OrderSummary ingredients={this.state.ingredients} totalCost={this.state.totalCost}/>
+                    {orderSummary}
                 </Modal>
                 <IngredientController ingredientPrices={this.state.ingredientPrices}
                                       addIngredients={this.addIngredients}
