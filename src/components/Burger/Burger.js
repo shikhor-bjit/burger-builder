@@ -3,7 +3,7 @@ import React from "react";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 const Burger = (props) => {
-    // console.log("ingredients: ", props.ingredients);
+    console.log("ingredients: ", props.ingredients);
     let processedIngredients = Object.keys(props.ingredients).map(
         igKey => {
             return [...Array(props.ingredients[igKey])].map(

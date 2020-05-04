@@ -6,52 +6,20 @@ import Burger from "../../components/Burger/Burger";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import IngredientController from "../../components/IngredientController/IngredientController";
+import * as actionTypes from '../../store/actions';
+import {connect} from 'react-redux';
 
 class BurgerBuilder extends Component {
     state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0,
-            cheese: 0,
-            meat: 0
-        },
-        ingredientPrices: {
-            salad: 10,
-            bacon: 20,
-            cheese: 30,
-            meat: 100
-        },
-        totalCost: 10,
         isPlacedOrder: false,
         loading: false,
         message: null
     }
 
-    addIngredients = (type) => {
-        const ingredients = {...this.state.ingredients};
-        const ingredientPrices = {...this.state.ingredientPrices};
-        ingredients[type] = ingredients[type] + 1;
-
-        const cost = ingredientPrices[type];
-
-        this.setState({ingredients: ingredients, totalCost: this.state.totalCost + cost});
-    }
-
-    removeIngredients = (type) => {
-        const ingredients = {...this.state.ingredients};
-        const ingredientPrices = {...this.state.ingredientPrices};
-        if (ingredients[type] <= 0) return;
-
-        ingredients[type] = ingredients[type] - 1;
-        const cost = ingredientPrices[type];
-
-        this.setState({ingredients: ingredients, totalCost: this.state.totalCost - cost});
-    }
-
     placeOrder = () => {
         let totalAdded = 0;
         let isPlacedOrder = true;
-        const ingredients = {...this.state.ingredients};
+        const ingredients = {...this.props.ingredients};
         Object.values(ingredients).forEach(ingCnt => totalAdded += ingCnt)
         if (totalAdded === 0) isPlacedOrder = false;
 
@@ -64,7 +32,7 @@ class BurgerBuilder extends Component {
 
     proceedOrder = () => {
         this.setState({loading: true});
-        axios.post('/orders.json', this.state.ingredients)
+        axios.post('/orders.json', this.props.ingredients)
             .then(response => {
                 this.setState({
                     loading: false,
@@ -78,9 +46,9 @@ class BurgerBuilder extends Component {
 
     isOrderPlaceAble = () => {
         let isPlaceAble = true;
-        Object.keys(this.state.ingredients).forEach(
+        Object.keys(this.props.ingredients).forEach(
             ingKey => {
-                if (this.state.ingredients[ingKey] > 0) isPlaceAble = false;
+                if (this.props.ingredients[ingKey] > 0) isPlaceAble = false;
             }
         )
         return isPlaceAble;
@@ -89,8 +57,8 @@ class BurgerBuilder extends Component {
     render() {
         let orderSummary = (
             <OrderSummary
-                ingredients={this.state.ingredients}
-                totalCost={this.state.totalCost}
+                ingredients={this.props.ingredients}
+                totalCost={this.props.totalCost}
                 clicked={this.cancelOrder}
                 proceedOrder={this.proceedOrder}/>
         );
@@ -99,16 +67,16 @@ class BurgerBuilder extends Component {
 
         return (
             <div className={'BurgerBuilder'}>
-                <Burger ingredients={this.state.ingredients}/>
+                <Burger ingredients={this.props.ingredients}/>
                 <Modal show={this.state.isPlacedOrder} clicked={this.cancelOrder}>
                     {orderSummary}
                 </Modal>
-                <IngredientController ingredientPrices={this.state.ingredientPrices}
-                                      addIngredients={this.addIngredients}
-                                      removeIngredients={this.removeIngredients}
-                                      totalCost={this.state.totalCost}
+                <IngredientController ingredientPrices={this.props.ingredientPrices}
+                                      addIngredients={this.props.onIngredientAdd}
+                                      removeIngredients={this.props.onIngredientRemove}
+                                      totalCost={this.props.totalCost}
                                       placeOrder={this.placeOrder}
-                                      ingredients={this.state.ingredients}
+                                      ingredients={this.props.ingredients}
                                       isOrderPlaceAble={this.isOrderPlaceAble()}
                 />
             </div>
@@ -116,4 +84,25 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default BurgerBuilder;
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        ingredientPrices: state.ingredientPrices,
+        totalCost: state.totalCost
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onIngredientAdd: (ingredientName) => dispatch({
+            type: actionTypes.ADD_INGREDIENT,
+            ingredientName: ingredientName
+        }),
+        onIngredientRemove: (ingredientName) => dispatch({
+            type: actionTypes.REMOVE_INGREDIENT,
+            ingredientName: ingredientName
+        })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);
