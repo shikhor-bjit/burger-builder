@@ -6,7 +6,7 @@ import Burger from "../../components/Burger/Burger";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import IngredientController from "../../components/IngredientController/IngredientController";
-import * as actionTypes from '../../store/actions';
+import * as actionTypes from '../../store/actions/actions';
 import {connect} from 'react-redux';
 
 class BurgerBuilder extends Component {
