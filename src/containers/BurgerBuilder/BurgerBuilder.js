@@ -16,6 +16,10 @@ class BurgerBuilder extends Component {
         message: null
     }
 
+    componentDidMount() {
+        this.props.onIngredientFetch();
+    }
+
     placeOrder = () => {
         let totalAdded = 0;
         let isPlacedOrder = true;
@@ -95,7 +99,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdd: (ingredientName) => dispatch(actionCreator.addIngredient(ingredientName)),
-        onIngredientRemove: (ingredientName) => dispatch(actionCreator.removeIngredient(ingredientName))
+        onIngredientRemove: (ingredientName) => dispatch(actionCreator.removeIngredient(ingredientName)),
+        onIngredientFetch: () => dispatch(actionCreator.fetchIngredient())
     };
 };
 

@@ -18,6 +18,7 @@ const initialState = {
 
 const burgerBuilder = (state = initialState, action) => {
     // console.log(action.type, action.ingredientName);
+    // console.log('my state:', state);
     let newState;
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
@@ -38,6 +39,14 @@ const burgerBuilder = (state = initialState, action) => {
                     [action.ingredientName]: state.ingredients[action.ingredientName] - 1
                 },
                 totalCost: state.totalCost - state.ingredientPrices[action.ingredientName]
+            };
+            break;
+        case actionTypes.FETCH_INGREDIENT:
+            newState = {
+                ...state,
+                ingredients: {
+                    ...state.ingredients,
+                }
             };
             break;
         default:
