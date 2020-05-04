@@ -16,7 +16,7 @@ const initialState = {
     totalCost: 10
 };
 
-const reducer = (state = initialState, action) => {
+const burgerBuilder = (state = initialState, action) => {
     // console.log(action.type, action.ingredientName);
     let newState;
     switch (action.type) {
@@ -47,4 +47,4 @@ const reducer = (state = initialState, action) => {
     return newState;
 };
 
-export default reducer;
+export default burgerBuilder;

@@ -4,10 +4,14 @@ import './index.css';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
-import {createStore} from "redux";
-import reducer from "./store/reducers/reducer";
+import {createStore, combineReducers} from "redux";
+import burgerBuilder from "./store/reducers/burgerBuilder";
 
-const store = createStore(reducer);
+const rootReducers = combineReducers({
+    builder: burgerBuilder
+});
+
+const store = createStore(rootReducers);
 
 ReactDOM.render(
     <React.StrictMode>
