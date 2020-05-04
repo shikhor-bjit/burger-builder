@@ -15,7 +15,8 @@ const rootReducers = combineReducers({
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     rootReducers,
-    composeEnhancers(applyMiddleware(logger, thunk))
+    // composeEnhancers(applyMiddleware(logger, thunk))
+    composeEnhancers(applyMiddleware(thunk))
 );
 
 ReactDOM.render(

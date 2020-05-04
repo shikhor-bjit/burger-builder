@@ -1,24 +1,18 @@
 import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
-    ingredients: {
-        salad: 0,
-        bacon: 0,
-        cheese: 0,
-        meat: 0
-    },
+    ingredients: null,
     ingredientPrices: {
         salad: 10,
         bacon: 20,
         cheese: 30,
         meat: 100
     },
-    totalCost: 10
+    totalCost: 10,
+    error: null
 };
 
 const burgerBuilder = (state = initialState, action) => {
-    // console.log(action.type, action.ingredientName);
-    // console.log('my state:', state);
     let newState;
     switch (action.type) {
         case actionTypes.ADD_INGREDIENT:
@@ -45,14 +39,19 @@ const burgerBuilder = (state = initialState, action) => {
             newState = {
                 ...state,
                 ingredients: {
-                    ...state.ingredients,
+                    ...action.ingredients
                 }
             };
             break;
+        case actionTypes.FETCH_INGREDIENT_FAILED:
+            newState = {
+                ...state,
+                error: action.error
+            };
+            break;
         default:
-            newState = {...state};
+            newState = state;
     }
-    // console.log('newState: ', newState);
     return newState;
 };
 

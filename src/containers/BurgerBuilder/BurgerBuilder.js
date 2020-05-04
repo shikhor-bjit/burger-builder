@@ -8,6 +8,7 @@ import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import IngredientController from "../../components/IngredientController/IngredientController";
 import {connect} from 'react-redux';
 import * as actionCreator from '../../store/actions';
+import Aux from "../../components/hoc/Aux";
 
 class BurgerBuilder extends Component {
     state = {
@@ -59,30 +60,43 @@ class BurgerBuilder extends Component {
     }
 
     render() {
-        let orderSummary = (
-            <OrderSummary
-                ingredients={this.props.ingredients}
-                totalCost={this.props.totalCost}
-                clicked={this.cancelOrder}
-                proceedOrder={this.proceedOrder}/>
-        );
-        if (this.state.loading) orderSummary = <Spinner/>;
-        if (this.state.message) orderSummary = this.state.message;
+        let orderSummary, body;
+
+        if (this.props.error) {
+            this.state.isPlacedOrder = true;
+            orderSummary = this.props.error;
+        } else if (this.props.ingredients) {
+            orderSummary = (
+                <OrderSummary
+                    ingredients={this.props.ingredients}
+                    totalCost={this.props.totalCost}
+                    clicked={this.cancelOrder}
+                    proceedOrder={this.proceedOrder}/>
+            );
+            if (this.state.loading) orderSummary = <Spinner/>;
+            if (this.state.message) orderSummary = this.state.message;
+
+            body = (
+                <Aux>
+                    <Burger ingredients={this.props.ingredients}/>
+                    <IngredientController ingredientPrices={this.props.ingredientPrices}
+                                          addIngredients={this.props.onIngredientAdd}
+                                          removeIngredients={this.props.onIngredientRemove}
+                                          totalCost={this.props.totalCost}
+                                          placeOrder={this.placeOrder}
+                                          ingredients={this.props.ingredients}
+                                          isOrderPlaceAble={this.isOrderPlaceAble()}
+                    />
+                </Aux>
+            );
+        } else body = <Spinner>Loading....</Spinner>;
 
         return (
             <div className={'BurgerBuilder'}>
-                <Burger ingredients={this.props.ingredients}/>
                 <Modal show={this.state.isPlacedOrder} clicked={this.cancelOrder}>
                     {orderSummary}
                 </Modal>
-                <IngredientController ingredientPrices={this.props.ingredientPrices}
-                                      addIngredients={this.props.onIngredientAdd}
-                                      removeIngredients={this.props.onIngredientRemove}
-                                      totalCost={this.props.totalCost}
-                                      placeOrder={this.placeOrder}
-                                      ingredients={this.props.ingredients}
-                                      isOrderPlaceAble={this.isOrderPlaceAble()}
-                />
+                {body}
             </div>
         );
     }
@@ -92,7 +106,8 @@ const mapStateToProps = state => {
     return {
         ingredients: state.builder.ingredients,
         ingredientPrices: state.builder.ingredientPrices,
-        totalCost: state.builder.totalCost
+        totalCost: state.builder.totalCost,
+        error: state.builder.error
     };
 };
 
