@@ -4,7 +4,6 @@ import './NavigationItem.css';
 const NavigationItem = props => {
     const link = props.link;
     const active = props.active;
-    console.log('active: ', active)
     return (
         <li className={'NavigationItem'}>
             <a href={link}

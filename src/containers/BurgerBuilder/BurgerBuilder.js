@@ -66,7 +66,10 @@ class BurgerBuilder extends Component {
         this.setState({loading: true});
         axios.post('/orders.json', this.state.ingredients)
             .then(response => {
-                this.setState({loading: false, message: 'order placed successful'});
+                this.setState({
+                    loading: false,
+                    message: 'Order placed! We will reach you soon.'
+                });
             })
             .catch(error => {
                 this.setState({loading: false, message: error.message});
