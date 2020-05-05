@@ -8,6 +8,7 @@ import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import burgerBuilder from "./store/reducers/burgerBuilder";
 import logger from "./store/logger";
 import thunk from "redux-thunk";
+import {BrowserRouter} from 'react-router-dom';
 
 const rootReducers = combineReducers({
     builder: burgerBuilder
@@ -19,10 +20,16 @@ const store = createStore(
     composeEnhancers(applyMiddleware(thunk))
 );
 
+const app = (
+    <BrowserRouter>
+        <App/>
+    </BrowserRouter>
+);
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <App/>
+            {app}
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

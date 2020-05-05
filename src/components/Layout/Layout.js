@@ -1,8 +1,10 @@
 import './Layout.css';
 import React from "react";
-import BurgerBuilder from "../../containers/BurgerBuilder/BurgerBuilder";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
 import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
+import {Route, Switch} from 'react-router-dom';
+import OrderList from "../OrderList";
+import BurgerBuilder from "../../containers/BurgerBuilder/BurgerBuilder";
 
 class Layout extends React.Component {
     state = {
@@ -30,7 +32,10 @@ class Layout extends React.Component {
                 <SideDrawer
                     open={this.state.isSideDrawerOpen}
                     clicked={this.closeSideDrawer}/>
-                <BurgerBuilder/>
+                <Switch>
+                    <Route path={'/burger-builder'} exact component={BurgerBuilder}/>
+                    <Route path={'/burger-builder/order-list'} exact component={OrderList}/>
+                </Switch>
             </div>
         );
     }
