@@ -5,6 +5,7 @@ import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
 import {Route, Switch} from 'react-router-dom';
 import OrderList from "../OrderList";
 import BurgerBuilder from "../../containers/BurgerBuilder/BurgerBuilder";
+import Auth from "../../containers/Auth/Auth";
 
 class Layout extends React.Component {
     state = {
@@ -35,6 +36,7 @@ class Layout extends React.Component {
                 <Switch>
                     <Route path={'/burger-builder'} exact component={BurgerBuilder}/>
                     <Route path={'/burger-builder/order-list'} exact component={OrderList}/>
+                    <Route path={'/burger-builder/authenticate'} exact component={Auth}/>
                 </Switch>
             </div>
         );

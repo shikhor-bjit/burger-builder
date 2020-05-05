@@ -6,9 +6,7 @@ class Auth extends Component {
     render() {
         return (
             <div className={'Auth'}>
-                <form>
-
-                </form>
+                <p>Login Form</p>
             </div>
         );
     }
