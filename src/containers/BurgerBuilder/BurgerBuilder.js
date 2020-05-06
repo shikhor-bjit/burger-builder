@@ -12,7 +12,6 @@ import Aux from "../../components/hoc/Aux";
 
 class BurgerBuilder extends Component {
     state = {
-        isPlacedOrder: false,
         loading: false,
         message: null
     }
@@ -61,9 +60,10 @@ class BurgerBuilder extends Component {
 
     render() {
         let orderSummary, body;
+        let showModal = false;
 
         if (this.props.error) {
-            this.setState({isPlacedOrder: true});
+            showModal = true;
             orderSummary = this.props.error;
         } else if (this.props.ingredients) {
             orderSummary = (
@@ -90,10 +90,9 @@ class BurgerBuilder extends Component {
                 </Aux>
             );
         } else body = <Spinner>Loading....</Spinner>;
-
         return (
             <div className={'BurgerBuilder'}>
-                <Modal show={this.state.isPlacedOrder} clicked={this.cancelOrder}>
+                <Modal show={showModal} clicked={this.cancelOrder}>
                     {orderSummary}
                 </Modal>
                 {body}
