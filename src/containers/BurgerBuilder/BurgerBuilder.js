@@ -13,7 +13,8 @@ import Aux from "../../components/hoc/Aux";
 class BurgerBuilder extends Component {
     state = {
         loading: false,
-        message: null
+        message: null,
+        isPlacedOrder: false
     }
 
     componentDidMount() {
@@ -36,7 +37,7 @@ class BurgerBuilder extends Component {
 
     proceedOrder = () => {
         this.setState({loading: true});
-        axios.post('/orders.json', this.props.ingredients)
+        axios.post(`/orders.json?auth=${localStorage.getItem('token')}`, this.props.ingredients)
             .then(response => {
                 this.setState({
                     loading: false,
@@ -90,6 +91,7 @@ class BurgerBuilder extends Component {
                 </Aux>
             );
         } else body = <Spinner>Loading....</Spinner>;
+        if (this.state.isPlacedOrder) showModal = true;
         return (
             <div className={'BurgerBuilder'}>
                 <Modal show={showModal} clicked={this.cancelOrder}>
