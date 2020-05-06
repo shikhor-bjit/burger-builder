@@ -2,9 +2,28 @@
     width: 400px;
     max-width: 95%;
     margin: 10px auto;
-    border-color: black;
+    border-color: #e25409;
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
     box-sizing: border-box;
+}
+
+.Auth input {
+    display: block;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #e25409;
+    width: 88%;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.Auth input:focus {
+    background-color: rgba(128, 128, 128, 0.15);
+}
+
+.Auth .FieldError {
+    color: crimson;
+    font-size: small;
 }

@@ -63,7 +63,7 @@ class BurgerBuilder extends Component {
         let orderSummary, body;
 
         if (this.props.error) {
-            this.state.isPlacedOrder = true;
+            this.setState({isPlacedOrder: true});
             orderSummary = this.props.error;
         } else if (this.props.ingredients) {
             orderSummary = (
