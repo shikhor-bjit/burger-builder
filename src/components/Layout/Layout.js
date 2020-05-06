@@ -3,9 +3,9 @@ import React from "react";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
 import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
 import {Route, Switch} from 'react-router-dom';
-import OrderList from "../OrderList";
 import BurgerBuilder from "../../containers/BurgerBuilder/BurgerBuilder";
 import Auth from "../../containers/Auth/Auth";
+import OrderList from "../OrderList/OrderList";
 
 class Layout extends React.Component {
     state = {

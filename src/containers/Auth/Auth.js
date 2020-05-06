@@ -5,6 +5,7 @@ import {Field, Form, Formik} from "formik";
 import Button from "../../components/UI/Button/Button";
 import axios from 'axios';
 import Spinner from "../../components/UI/Spinner/Spinner";
+import {Redirect} from "react-router";
 
 class Auth extends Component {
     state = {
@@ -36,7 +37,8 @@ class Auth extends Component {
                 initialValue: ''
             }
         },
-        loading: false
+        loading: false,
+        redirect: false
     }
 
     onSubmit = values => {
@@ -47,13 +49,11 @@ class Auth extends Component {
         //~ to figure out, why my requests got unauthorized response though i was using returned token
         axios.post(url, values)
             .then(response => {
-                console.log(response.data);
-                localStorage.setItem('token', response.data['idToken'])
-                this.setState({loading: false});
+                localStorage.setItem('token', response.data['idToken']);
+                this.setState({loading: false, redirect: true});
             })
             .catch(error => {
-                this.setState({loading: false});
-                console.log(error);
+                this.setState({loading: false, redirect: false});
             })
     }
 
@@ -85,26 +85,24 @@ class Auth extends Component {
         Object.keys(loginForm)
             .forEach(key => initialValues[key] = loginForm[key].initialValue);
 
-        return (
-            <div className={'Auth'}>
-                {
-                    this.state.loading
-                        ? <Spinner/>
-                        : <Formik
-                            initialValues={initialValues}
-                            onSubmit={this.onSubmit}>
-                            {({errors, touched}) => (
-                                <Form>
-                                    {this.prepareFormikFields(errors, touched)}
-                                    <div style={{display: "flex", justifyContent: "center"}}>
-                                        <Button type={'Success'}>LOGIN</Button>
-                                    </div>
-                                </Form>
-                            )}
-                        </Formik>
-                }
-            </div>
-        );
+        const content = this.state.redirect
+            ? <Redirect to={'/burger-builder'}/>
+            : this.state.loading
+                ? <Spinner/>
+                : <Formik
+                    initialValues={initialValues}
+                    onSubmit={this.onSubmit}>
+                    {({errors, touched}) => (
+                        <Form>
+                            {this.prepareFormikFields(errors, touched)}
+                            <div style={{display: "flex", justifyContent: "center"}}>
+                                <Button type={'Success'}>LOGIN</Button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>;
+
+        return (<div className={'Auth'}> {content} </div>);
     }
 }
 
