@@ -91,6 +91,7 @@ class BurgerBuilder extends Component {
                 </Aux>
             );
         } else body = <Spinner>Loading....</Spinner>;
+
         if (this.state.isPlacedOrder) showModal = true;
         return (
             <div className={'BurgerBuilder'}>
