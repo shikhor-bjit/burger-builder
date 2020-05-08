@@ -1,30 +1,34 @@
 import React from 'react';
 import Order from "./Order/Order";
 import axios from '../../axios-order';
+import Spinner from "../UI/Spinner/Spinner";
 
 class OrderList extends React.Component {
     state = {
         orders: null,
         hasError: false,
-        errMessage: ''
+        errMessage: '',
+        loading: false
     }
 
     componentDidMount() {
+        this.setState({loading: true});
         axios.get(`/orders.json?auth=${localStorage.getItem('token')}`)
             .then(response => {
                 this.setState({
                     orders: response.data,
-                    hasError: false
+                    hasError: false,
+                    loading: false
                 });
             })
             .catch(error => {
                 console.log(error);
-                this.setState({hasError: true, errMessage: error.message});
+                this.setState({hasError: true, errMessage: error.message, loading: false});
             })
     }
 
     render() {
-        const content = this.state.hasError
+        let content = this.state.hasError
             ? <p style={
                 {
                     backgroundColor: "crimson",
@@ -46,6 +50,7 @@ class OrderList extends React.Component {
                         return <Order key={key} serial={i + 1} items={this.state.orders[key]}/>
                     }
                 );
+        if (this.state.loading) content = <Spinner>Loading...</Spinner>
 
         return (
             <div className={'OrderList'}>
