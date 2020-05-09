@@ -22,7 +22,7 @@ class Auth extends Component {
                     if (value.trim().length === 0)
                         return '* Email Required';
                 },
-                initialValue: ''
+                initialValue: 'user@bb.com'
             },
             password: {
                 label: 'Password',
@@ -35,7 +35,7 @@ class Auth extends Component {
                     if (value.trim().length === 0)
                         return '* Password Required';
                 },
-                initialValue: ''
+                initialValue: 'awesomeuser'
             }
         },
         loading: false,
