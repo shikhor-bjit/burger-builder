@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 
 export const AuthContext = React
-    .createContext({token: '', updateToken: null});
+    .createContext({token: '', updateToken: () => {}});
 
 export const useAuth = () => useContext(AuthContext);
