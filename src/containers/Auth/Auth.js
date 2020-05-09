@@ -6,6 +6,7 @@ import Button from "../../components/UI/Button/Button";
 import axios from 'axios';
 import Spinner from "../../components/UI/Spinner/Spinner";
 import {Redirect} from "react-router";
+import {AuthContext} from "../../context/AuthContext/AuthContext";
 
 class Auth extends Component {
     state = {
@@ -41,6 +42,8 @@ class Auth extends Component {
         redirect: false
     }
 
+    static contextType = AuthContext;
+
     onSubmit = values => {
         this.setState({loading: true});
         const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBpPcBC_CkREoXA5lM4yd1qrek9i1rAU8U';
@@ -49,6 +52,7 @@ class Auth extends Component {
         //~ to figure out, why my requests got unauthorized response though i was using returned token
         axios.post(url, values)
             .then(response => {
+                this.context.updateToken(response.data['idToken']);
                 localStorage.setItem('token', response.data['idToken']);
                 this.setState({loading: false, redirect: true});
             })
@@ -80,13 +84,14 @@ class Auth extends Component {
     }
 
     render() {
+        let redirectTo = (this.props.location.state && this.props.location.state.referer) || '/burger-builder';
         const initialValues = {};
         const loginForm = this.state.loginForm;
         Object.keys(loginForm)
             .forEach(key => initialValues[key] = loginForm[key].initialValue);
 
         const content = this.state.redirect
-            ? <Redirect to={'/burger-builder'}/>
+            ? <Redirect to={redirectTo}/>
             : this.state.loading
                 ? <Spinner/>
                 : <Formik

@@ -6,6 +6,8 @@ import {Route, Switch} from 'react-router-dom';
 import BurgerBuilder from "../../containers/BurgerBuilder/BurgerBuilder";
 import Auth from "../../containers/Auth/Auth";
 import OrderList from "../OrderList/OrderList";
+import PrivateRoute from "../PrivateRouter/PrivateRouter";
+import Logout from "../../containers/Auth/Logout";
 
 class Layout extends React.Component {
     state = {
@@ -34,9 +36,10 @@ class Layout extends React.Component {
                     open={this.state.isSideDrawerOpen}
                     clicked={this.closeSideDrawer}/>
                 <Switch>
-                    <Route path={'/burger-builder'} exact component={BurgerBuilder}/>
-                    <Route path={'/burger-builder/order-list'} exact component={OrderList}/>
+                    <PrivateRoute path={'/burger-builder'} exact component={BurgerBuilder}/>
+                    <PrivateRoute path={'/burger-builder/order-list'} exact component={OrderList}/>
                     <Route path={'/burger-builder/authenticate'} exact component={Auth}/>
+                    <Route path={'/burger-builder/logout'} exact component={Logout}/>
                 </Switch>
             </div>
         );
